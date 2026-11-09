@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Wee4.Test/Wee4.Test.csproj" Id="1bab5423-54b3-4f5e-979a-56b14084453d" />
+  <Project Path="week4/week4.csproj" />
+</Solution>
