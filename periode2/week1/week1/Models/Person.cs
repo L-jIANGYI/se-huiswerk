@@ -5,6 +5,7 @@
         private string firstName;
         private string lastName;
         private int age;
+        private List<Animal> pets = new List<Animal>();
 
         public Person(string firstName, string lastName, int age)
         {
@@ -13,9 +14,19 @@
             this.age = age;
         }
 
+        public void AddPet(Animal pet)
+        {
+            pets.Add(pet);
+        }
+
+        public List<Animal> GetPets()
+        {
+            return pets;
+        }
+
         public string GetName()
         {
-            return firstName + "" + lastName;
+            return firstName + " " + lastName;
         }
 
         public int GetAge()

@@ -19,8 +19,11 @@ namespace week1
         {
             InitializeComponent();
 
-            AddPerson("Jiangyi", "Liu", 22);
+            selectedPerson = AddPerson("Jiangyi", "Liu", 22);
             AddPerson("Random", "Guy", 123);
+
+            selectedPerson.AddPet(new Animal("Asd", "Hond"));
+            UpdateAnimalList();
         }
 
         /// <summary>
@@ -30,10 +33,14 @@ namespace week1
         /// <param name="e"></param>
         private void AddPersonClicked(object sender, RoutedEventArgs e)
         {
-            int age = Convert.ToInt32(Age.Text);
+            int age = Convert.ToInt32(Age.Value);
             Person person = AddPerson(FirstName.Text, LastName.Text, age);
 
             selectedPerson = person;
+
+            FirstName.Text = "";
+            LastName.Text = "";
+            Age.Value = 18;
         }
 
         /// <summary>
@@ -43,7 +50,17 @@ namespace week1
         /// <param name="e"></param>
         private void AddAnimalClicked(object sender, RoutedEventArgs e)
         {
-            // TODO
+            if (selectedPerson == null) MessageBox.Show("Selecteer eerst een person");
+            else
+            {
+                Animal pet = new Animal(PetName.Text, PetType.Text);
+                selectedPerson.AddPet(pet);
+
+                UpdateAnimalList();
+
+                PetName.Text = "";
+                PetType.Text = "";
+            }
         }
 
         /// <summary>
@@ -54,7 +71,13 @@ namespace week1
         private void PersonSelected(object sender, SelectionChangedEventArgs e)
         {
             selectedPerson = (Person)ListViewPersons.SelectedItem;
-            if (selectedPerson != null) MessageBox.Show(selectedPerson.ToString());
+            if (selectedPerson != null) UpdateAnimalList();
+        }
+
+        private void AnimalSelected(object sender, SelectionChangedEventArgs e)
+        {
+            Animal selectedAnimal = (Animal)ListViewPets.SelectedItem;
+            MessageBox.Show($"Baasje: {selectedPerson.GetName()}\n{selectedAnimal}");
         }
 
         /// <summary>
@@ -73,6 +96,18 @@ namespace week1
             ListViewPersons.ItemsSource = persons;
 
             return person;
+        }
+
+        private void UpdateAnimalList()
+        {
+            ListViewPets.ItemsSource = null;
+
+            bool havePets = selectedPerson.GetPets().Count != 0;
+
+            if (havePets) ListViewPets.ItemsSource = selectedPerson.GetPets();
+            else
+                ListViewPets.ItemsSource = new List<string>
+                    { $"Nog geen huisdier geregistreerd voor {selectedPerson.GetName()}" };
         }
     }
 }
