@@ -22,7 +22,7 @@ namespace week1
             selectedPerson = AddPerson("Jiangyi", "Liu", 22);
             AddPerson("Random", "Guy", 123);
 
-            selectedPerson.AddPet(new Animal("Asd", "Hond"));
+            selectedPerson.AddPet(new Dog("Asd"));
             UpdateAnimalList();
         }
 
@@ -50,17 +50,28 @@ namespace week1
         /// <param name="e"></param>
         private void AddAnimalClicked(object sender, RoutedEventArgs e)
         {
-            if (selectedPerson == null) MessageBox.Show("Selecteer eerst een person");
-            else
+            if (selectedPerson == null)
             {
-                Animal pet = new Animal(PetName.Text, PetType.Text);
-                selectedPerson.AddPet(pet);
-
-                UpdateAnimalList();
-
-                PetName.Text = "";
-                PetType.Text = "";
+                MessageBox.Show("Selecteer eerst een person");
+                return;
             }
+
+            Animal pet;
+
+            switch (PetType.Text)
+            {
+                case "Hond": pet = new Dog(PetName.Text); break;
+                case "Kat": pet = new Cat(PetName.Text); break;
+                default:
+                    MessageBox.Show("???");
+                    return;
+            }
+
+            selectedPerson.AddPet(pet);
+            UpdateAnimalList();
+
+            PetName.Text = "";
+            PetType.SelectedIndex = 0;
         }
 
         /// <summary>

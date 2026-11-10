@@ -1,19 +1,19 @@
 ﻿namespace week1.Models
 {
-    internal class Animal
+    internal abstract class Animal
     {
-        private string name;
-        private string kind;
+        protected string name;
 
-        public Animal(string name, string kind)
+        public Animal(string name)
         {
             this.name = name;
-            this.kind = kind;
         }
+
+        public abstract string GetAnimalType();
 
         public override string ToString()
         {
-            return $"Naam: {this.name} - Soort: {this.kind}";
+            return $"Naam: {this.name} - Soort: {GetAnimalType()}";
         }
     }
 }

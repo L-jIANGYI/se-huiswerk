@@ -47,8 +47,12 @@
             <Label Content="Huisdier" FontWeight="Bold" FontSize="18" />
             <Label Content="Naam" />
             <TextBox x:Name="PetName" />
+
             <Label Content="Soort" />
-            <TextBox x:Name="PetType" />
+            <ComboBox x:Name="PetType" SelectedIndex="0">
+                <ComboBoxItem Content="Hond" />
+                <ComboBoxItem Content="Kat" />
+            </ComboBox>
 
             <Button Content="Toevoegen"
                     Click="AddAnimalClicked"
